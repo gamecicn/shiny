@@ -1,6 +1,6 @@
 FROM r-base:latest
 
-MAINTAINER Winston Chang "winston@rstudio.com"
+MAINTAINER Martin Guo "martin.guo@irdeto.com"
 
 RUN apt-get update && apt-get install -y -t unstable \
     sudo \
@@ -18,10 +18,25 @@ RUN wget --no-verbose https://s3.amazonaws.com/rstudio-shiny-server-os-build/ubu
     gdebi -n ss-latest.deb && \
     rm -f version.txt ss-latest.deb && \
     R -e "install.packages(c('shiny', 'rmarkdown'), repos='https://cran.rstudio.com/')" && \
+    R -e "install.packages(c('DT', 'ggplot2'), repos='https://cran.rstudio.com/')" && \
+    R -e "install.packages(c('RMySQL'), method='curl')" && \
     cp -R /usr/local/lib/R/site-library/shiny/examples/* /srv/shiny-server/
 
+    
+    
 EXPOSE 3838
 
 COPY shiny-server.sh /usr/bin/shiny-server.sh
 
 CMD ["/usr/bin/shiny-server.sh"]
+
+
+
+
+
+
+
+
+
+
+
